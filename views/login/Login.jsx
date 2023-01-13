@@ -1,9 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 const Login = () => {
+  const navigation = useNavigation()
+  const goRegister = () => {
+    navigation.navigate('Register')
+  }
+
   return (
     <View >
       <View style={estiloLogin.seccImg}>
@@ -29,7 +35,7 @@ const Login = () => {
 
         <View>
 
-          <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15,marginBottom:40,marginTop:40,justifyContent:'center',alignSelf:'center'}} >
+          <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15,marginBottom:40,marginTop:40,justifyContent:'center',alignSelf:'center'}} onPress={goRegister} >
               Forget Password
           </Text>
 
@@ -37,7 +43,7 @@ const Login = () => {
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
             Don´t have an account ?
-            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} >
+            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} onPress={goRegister} >
                Sign up
             </Text>
           </Text>

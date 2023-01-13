@@ -1,9 +1,16 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import { Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import Button from '../../components/Button';
-import Input from '../../components/Input';
 
 const Inicio = () => {
+
+  const navigation = useNavigation()
+
+  const goRegister = () => {
+    navigation.navigate('Register')
+  }
+
   return (
     <View >
       <View style={estiloInicio.seccImg}>
@@ -29,8 +36,7 @@ const Inicio = () => {
 
         <View style={{marginTop:70}}>
           
-
-          <Button text={"Get Started"}/>
+          <Button text={"Get Started"} pres={goRegister}/>
 
         </View>
       </View>

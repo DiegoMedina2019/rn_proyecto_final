@@ -1,9 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 const Register = () => {
+  const navigation = useNavigation()
+  const goLogin = () => {
+    navigation.navigate("Login")
+  }
+
   return (
     <View >
       <View style={estiloRegister.seccImg}>
@@ -30,11 +36,11 @@ const Register = () => {
         </View>
 
         <View>
-          <Button text={"Register"}/>
+          <Button text={"Register"}  pres={goLogin} />
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
             Already have an account ?
-            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} >
+            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} onPress={goLogin}>
                Sign in
             </Text>
           </Text>
