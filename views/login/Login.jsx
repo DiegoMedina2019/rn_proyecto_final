@@ -1,13 +1,57 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
-import { Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { Alert, Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import { userLogin } from '../../services/api';
+import { AuthContext } from '../../services/Context';
+import LocalStorage from '../../services/localStorage';
+
 
 const Login = () => {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
   const navigation = useNavigation()
+
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useContext(AuthContext);
+
+
   const goRegister = () => {
     navigation.navigate('Register')
+  }
+
+  const valid = async () => {
+    let b = true
+    if (email.trim() == '') {
+      b = false
+      Alert.alert("El Campo Email es requerido")
+    }
+    if (password.length === 0 || password.length < 7) {
+      b = false
+      Alert.alert("El Campo Password debe tener al menos 7 caracteres o mas")
+    }
+
+
+    if (b) {
+      const data = {
+        email: email,
+        password: password
+      };
+    
+      try {
+        const response = await userLogin(data);
+
+        //login({ ...response });
+        LocalStorage.setItem('obj_login', response);
+        navigation.navigate('Home')
+      } catch (e) {
+        console.error('userLogin -> Error:', e)
+      }
+      
+    }
+
   }
 
   return (
@@ -29,8 +73,18 @@ const Login = () => {
         </View>
 
         <View style={{marginBottom:10,marginTop:10}}>
-          <Input  placeholder={"Enter your e-mail"}/>
-          <Input  placeholder={"Confirm password"}/>
+          <Input
+            placeholder={"Enter your e-mail"}
+            name="email"
+            text={email}
+            changeText={setEmail}
+          />
+          <Input
+            placeholder={"Confirm password"}
+            name="password"
+            text={password}
+            changeText={setPassword}
+          />
         </View>
 
         <View>
@@ -39,7 +93,7 @@ const Login = () => {
               Forget Password
           </Text>
 
-          <Button text={"Log in"}/>
+          <Button text={"Log in"} pres={valid}/>
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
             Don´t have an account ?

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { showFlashMessage } from '../components/flashMessage';
 import { setTokenAuthentication } from '../services/api';
 import LocalStorage from '../services/localStorage';
-import t from '../services/translate';
+//import t from '../services/translate';
 
 const auth = {
   user: undefined,

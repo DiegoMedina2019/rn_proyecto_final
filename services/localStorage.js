@@ -8,13 +8,14 @@ class LocalStorage {
   static setItem(key, value) {
     let jsonValue = value;
     if (typeof value !== 'string') {
+      //console.log("soy obj");
       jsonValue = JSON.stringify(value);
     }
     return AsyncStorage.setItem(key, jsonValue);
   }
 
   static removeItem(key) {
-    AsyncStorage.removeItem(key);
+     AsyncStorage.removeItem(key);
   }
 }
 

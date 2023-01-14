@@ -17,6 +17,7 @@ const Register = () => {
 
   const navigation = useNavigation()
   const goLogin = () => {
+    console.log("hey");
     navigation.navigate("Login")
   }
 
@@ -28,7 +29,6 @@ const Register = () => {
         return 1
       }
     })
-    console.log(itemsVacios);
     if (itemsVacios.length > 0) {
       b = false
       Alert.alert("Falta completar campos")
@@ -44,11 +44,10 @@ const Register = () => {
       Alert.alert("la 2da contraseña debe ser igual a la 1era")
     }
     if (b) {
-        const data = {
-          name: name,
-          email: email,
-          password: password,
-          age:20
+      const data = {
+        name: name,
+        email: email,
+        password: password
       };
     
       try {
@@ -57,21 +56,12 @@ const Register = () => {
         console.log(response);
          goLogin()
       } catch (e) {
-        console.error('Error:', e)
-        //setErrorMessage(e.response.data);
-        //Alert.alert(e);
-        /* showFlashMessage({
-          message: t('input_validation.backend_error'),
-          description: e.response.data,
-          type: 'danger',
-        }); */
+        console.error('userRegister -> Error:', e)
       }
       
     }
     
   }
-
-
 
   return (
     <View >
@@ -123,7 +113,7 @@ const Register = () => {
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
             Already have an account ?
-            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} valid={goLogin}>
+            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} onPress={goLogin}>
                Sign in
             </Text>
           </Text>
