@@ -7,12 +7,14 @@ import Register from './views/register/Register';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import FlashMessage from "react-native-flash-message";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <View style={styles.container}>
-
+      {/* <FlashMessage position="top" />  */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Inicio'>
           <Stack.Screen name="Inicio" component={Inicio} options={{headerShown:false}} />

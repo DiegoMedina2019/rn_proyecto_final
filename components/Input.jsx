@@ -1,12 +1,21 @@
-import React from 'react'
-import { StyleSheet, TextInput } from 'react-native';
+import React, { useState } from 'react'
+import { StyleSheet, Text, TextInput } from 'react-native';
 
-const Input = ({placeholder}) => {
+const Input = ({placeholder,name,text,changeText}) => {
+
+    //const [text, onChangeText] = useState('');
+    
   return (
-    <TextInput 
-        style={styleInput.input}
-        placeholder={placeholder}
-    />
+    <>
+      <TextInput 
+          style={styleInput.input}
+          placeholder={placeholder}
+          name={name}
+          value={text}
+          onChangeText={changeText}
+      />
+      {/* {errors?.name && <Text>{errors.name}</Text>} */}
+    </>
   )
 }
 
