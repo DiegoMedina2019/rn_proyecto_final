@@ -1,16 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import Button from '../../components/Button';
 import LocalStorage from '../../services/localStorage';
 
-const setData = () => {
-  return LocalStorage.getItem('obj_login');
-}
+const getData = () => LocalStorage.getItem('obj_login')
 
 const Home =  () => {
-  
-  console.log( setData());
+  const [auth,setAuth] = useState(null)
+  useEffect(() => {
+    getData().then( res => {
+      setAuth(JSON.parse(res))
+    })
+  }, [])
+
   return (
     <View >
       <View style={estiloHome.seccImg}>
@@ -26,10 +29,10 @@ const Home =  () => {
             style={{width: 200, height: 200,alignSelf:'center'}}
           />
           <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10,marginTop:25}}>
-          {/*  {user.name} */}
+           {auth?.user?.name}
           </Text>
           <Text style={{alignSelf:'center',fontSize:15,marginBottom:20,textAlign:'center'}}>
-            {/* {token} */}
+            {auth?.token}
           </Text>
 
         </View>
