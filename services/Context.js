@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
       isLoggedIn: true,
       token,
     });
-    setTokenAuthentication(token); //falta este metodo
+   // setTokenAuthentication(token); //falta este metodo
     LocalStorage.setItem('token', token);
   };
 

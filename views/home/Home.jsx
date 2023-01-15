@@ -1,45 +1,67 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button from '../../components/Button';
+import { getAllTask } from '../../services/api';
+import { AuthContext } from '../../services/Context';
 import LocalStorage from '../../services/localStorage';
-
-const getData = () => LocalStorage.getItem('obj_login')
 
 const Home =  () => {
   const [auth,setAuth] = useState(null)
+  const [tasks,setTasks] = useState(null)
+  const { user,login } = useContext(AuthContext);
+  const navigation = useNavigation()
+
   useEffect(() => {
-    getData().then( res => {
+    /* LocalStorage.getItem('obj_login').then( res => {
       setAuth(JSON.parse(res))
-    })
+    }) */
+    
   }, [])
 
+  useEffect(() => {
+    //getTask(user.token)
+    getAllTask(user.token).then( r => {
+      setTasks( r )
+    })
+  }, [])
+  
+  const addTask = () => {
+    navigation.navigate("AddTask")
+  }
+
   return (
-    <View >
+    <View>
       <View style={estiloHome.seccImg}>
         <Image 
           source={require('../../assets/images/elipse.png')}
         />
       </View>
       <View style={estiloHome.vista}>
-        <View>
+        <View style={{height:"63%"}}>
 
-          <Image 
-            source={require('../../assets/images/onboarding.png')} 
-            style={{width: 200, height: 200,alignSelf:'center'}}
-          />
-          <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10,marginTop:25}}>
-           {auth?.user?.name}
+          <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10}}>
+           {"Tu lista de tareas"}
           </Text>
-          <Text style={{alignSelf:'center',fontSize:15,marginBottom:20,textAlign:'center'}}>
-            {auth?.token}
-          </Text>
+          <ScrollView>
+            <View  style={{justifyContent:'center'}}>
+
+              {
+                 tasks?.data.map(ele => {
+                  return <Text key={ele._id} style={estiloHome.task}>{ele.description}</Text>
+                })
+              }
+
+            </View>
+          </ScrollView>
 
         </View>
 
-        <View style={{marginTop:70}}>
+        <View style={{}}>
           
-          <Button text={"Agregar Tarea"}/>
+          <Button text={"Crear nueva tarea"} pres={addTask} />
+          <Button text={"Sacar una foto"}/>
+          <Button text={"Cerrar sesión"}/>
 
         </View>
       </View>
@@ -51,8 +73,7 @@ const Home =  () => {
 const estiloHome = new StyleSheet.create({
   vista:{
     width:"80%",
-    justifyContent:'center',
-    alignContent:'center',
+    marginTop:-100,
     alignSelf:'center'
    // margin:30
   },
@@ -60,7 +81,15 @@ const estiloHome = new StyleSheet.create({
     right:50,
     marginLeft:-40,
     marginTop:-90
-  }  
+  },
+  task:{
+    borderRadius:40,
+    backgroundColor:"coral",
+    height:40,
+    textAlignVertical:'center',
+    paddingLeft:10,
+    marginBottom:10
+  }
 });
 
 export default Home

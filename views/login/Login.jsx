@@ -43,8 +43,8 @@ const Login = () => {
       try {
         const response = await userLogin(data);
 
-        //login({ ...response });
-        LocalStorage.setItem('obj_login', response);
+        login({ ...response });
+        //LocalStorage.setItem('obj_login', response);
         navigation.navigate('Home')
       } catch (e) {
         console.error('userLogin -> Error:', e)

@@ -61,3 +61,46 @@ export const setTokenAuthentication = async (token) => {
   });
   
 }
+
+
+export const getAllTask = async (token) => {
+
+  return await fetch(`${url}task`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  }).then(response => response.json())
+    .then(data => {
+      console.log("Tareas : ", data);
+      return data;
+    })
+    .catch(function(error) {
+    console.log('There has been a problem with your fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+  });
+  
+}
+
+export const createTask = async (data) => {
+
+  return await fetch(`${url}task`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${data.token}`
+    },
+    body: JSON.stringify(data.task) // body data type must match "Content-Type" header
+  }).then((response) => response.json())
+  .then((res) => {
+    console.log("ADD TASK: ",res);
+    return res
+  }).catch(function(error) {
+    console.log('There has been a problem with your fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+  });
+  
+}
