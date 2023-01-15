@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button from '../../components/Button';
+import { Task } from '../../components/Task';
 import { getAllTask } from '../../services/api';
 import { AuthContext } from '../../services/Context';
 import LocalStorage from '../../services/localStorage';
@@ -9,15 +10,18 @@ import LocalStorage from '../../services/localStorage';
 const Home =  () => {
   const [auth,setAuth] = useState(null)
   const [tasks,setTasks] = useState(null)
-  const { user,login } = useContext(AuthContext);
+  const { user,setUser ,backPressed, setBackPressed} = useContext(AuthContext);
   const navigation = useNavigation()
-
+  
+  //me aseguro que listen nuevamente las tareas cuando hay algun CRUD y se vuelve a esta vista
   useEffect(() => {
     /* LocalStorage.getItem('obj_login').then( res => {
       setAuth(JSON.parse(res))
     }) */
-    
-  }, [])
+    if(backPressed) getAllTask(user.token).then( r => {
+      setTasks( r )
+    })
+  }, [backPressed])
 
   useEffect(() => {
     //getTask(user.token)
@@ -28,6 +32,12 @@ const Home =  () => {
   
   const addTask = () => {
     navigation.navigate("AddTask")
+  }
+
+  const edit = (info) => {
+    console.log("Task Seleccionada : ",JSON.stringify(info))
+    setUser({...user,task:info})
+    navigation.navigate("EditTask")
   }
 
   return (
@@ -48,7 +58,10 @@ const Home =  () => {
 
               {
                  tasks?.data.map(ele => {
-                  return <Text key={ele._id} style={estiloHome.task}>{ele.description}</Text>
+                  return <Task 
+                            key={ele._id} 
+                            pres={() => edit({id:ele._id,description:ele.description} )}
+                            texto={ele.description} />
                 })
               }
 

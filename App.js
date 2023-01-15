@@ -11,6 +11,7 @@ import FlashMessage from "react-native-flash-message";
 import Home from './views/home/Home';
 import { UserProvider } from './services/Context';
 import { AddTask } from './views/task/AddTask';
+import { EditTask } from './views/task/EditTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
              <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
             <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
             <Stack.Screen name="AddTask" component={AddTask} options={{headerShown:false}} />
+            <Stack.Screen name="EditTask" component={EditTask} options={{headerShown:false}} />
           </Stack.Navigator>
         </NavigationContainer>
 

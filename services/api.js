@@ -104,3 +104,24 @@ export const createTask = async (data) => {
   });
   
 }
+
+export const updateTask = async (data) => {
+
+  return await fetch(`${url}task/${data.task_id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${data.token}`
+    },
+    body: JSON.stringify(data.task) // body data type must match "Content-Type" header
+  }).then((response) => response.json())
+  .then((res) => {
+    console.log("UPDATE TASK: ",res);
+    return res
+  }).catch(function(error) {
+    console.log('There has been a problem with your fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+  });
+  
+}

@@ -7,15 +7,18 @@ const auth = {
   user: undefined,
   isLoggedIn: false,
   token: '',
+  task:{}
 };
 
 export const AuthContext = React.createContext(auth);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(auth);
+  const [backPressed, setBackPressed] = useState(false);//maneja evento cuando aprieto el btn volver de alguna vista
 
   const login = ({ user, token }) => {
     setUser({
+      ...auth,
       user,
       isLoggedIn: true,
       token,
@@ -25,7 +28,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login ,setUser,backPressed, setBackPressed}}>
       {children}
     </AuthContext.Provider>
   );

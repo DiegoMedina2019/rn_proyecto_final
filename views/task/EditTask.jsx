@@ -3,43 +3,47 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Image, StyleSheet, Switch, View } from 'react-native'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import { createTask } from '../../services/api';
+import { createTask, updateTask } from '../../services/api';
 import { AuthContext } from '../../services/Context';
 
-export const AddTask = () => {
-  const { user,setUser,backPressed, setBackPressed } = useContext(AuthContext);
+export const EditTask = () => {
+    const { user,setUser,backPressed, setBackPressed } = useContext(AuthContext);
     const [tarea,setTarea] = useState('')
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     useEffect(() => {
+      setTarea(user.task.description)
+    }, [])
+    
+    useEffect(() => {
       setBackPressed(false); // me aseguro de reinicializar el estado para q se pueda listar las tareas al regregar
     }, [])
     
-
     const volver = () => {
         setBackPressed(true);
         navigation.goBack();
     }
-    const crear = () => {
+    const editar = () => {
         let d = {
+            task_id:user.task.id,
             token:user.token,
             task: {"description": tarea}
         }
-        createTask(d).then(r=>{
-            Alert.alert("Tarea creada con exito")
+        updateTask(d).then(r=>{
+            Alert.alert("Tarea editada con exito")
         })
     }
 
   return (
     <View >
-      <View style={estiloAddTask.seccImg}>
+      <View style={estiloEditTask.seccImg}>
         <Image 
           source={require('../../assets/images/elipse.png')}
         />
       </View>
-      <View style={estiloAddTask.vista}>
+      <View style={estiloEditTask.vista}>
 
         <View style={{marginBottom:10,marginTop:10,alignItems:'center'}}>
           <Input
@@ -59,7 +63,7 @@ export const AddTask = () => {
 
         <View>
 
-          <Button text={"Crear tarea"} pres={crear}/>
+          <Button text={"Editar tarea"} pres={editar}/>
           <Button text={"volver"} pres={volver}/>
 
         </View>
@@ -70,7 +74,7 @@ export const AddTask = () => {
 
 
 }
-const estiloAddTask = new StyleSheet.create({
+const estiloEditTask = new StyleSheet.create({
     vista:{
       width:"80%",
       marginTop:-100,
