@@ -58,29 +58,29 @@ const Login = () => {
     <View >
       <View style={estiloLogin.seccImg}>
         <Image 
-          source={require('../../assets/images/elipse.png')}
+          source={require('../../assets/images/elipse-seleccion-3.png')}
         />
       </View>
       <View style={estiloLogin.vista}>
         <View>
           <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:20}}>
-            Welcome Back!
+            ¡Bienvenido de nuevo!
           </Text>
           <Image 
-            source={require('../../assets/images/login.png')} 
+            source={require('../../assets/images/login-1.png')} 
             style={{width: 200, height: 200,alignSelf:'center'}}
           />
         </View>
 
         <View style={{marginBottom:10,marginTop:10}}>
           <Input
-            placeholder={"Enter your e-mail"}
+            placeholder={"Ingresa tu E-mail"}
             name="email"
             text={email}
             changeText={setEmail}
           />
           <Input
-            placeholder={"Confirm password"}
+            placeholder={"Ingresa tu contraseña"}
             name="password"
             text={password}
             changeText={setPassword}
@@ -89,16 +89,16 @@ const Login = () => {
 
         <View>
 
-          <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15,marginBottom:40,marginTop:40,justifyContent:'center',alignSelf:'center'}} onPress={goRegister} >
-              Forget Password
+          <Text style={{color:'#bfb240',fontWeight:'bold',fontSize:15,marginBottom:40,marginTop:40,justifyContent:'center',alignSelf:'center'}} onPress={goRegister} >
+              Olvide mi contraseña
           </Text>
 
-          <Button text={"Log in"} pres={valid}/>
+          <Button text={"Iniciar sesión"} pres={valid}/>
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
-            Don´t have an account ?
-            <Text style={{color:'skyblue',fontWeight:'bold',fontSize:15}} onPress={goRegister} >
-               Sign up
+            ¿No tienes una cuenta?
+            <Text style={{color:'#bfb240',fontWeight:'bold',fontSize:15}} onPress={goRegister} >
+              Regístrate
             </Text>
           </Text>
         </View>

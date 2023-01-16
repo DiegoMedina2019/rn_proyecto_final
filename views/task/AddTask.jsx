@@ -36,7 +36,7 @@ export const AddTask = () => {
     <View >
       <View style={estiloAddTask.seccImg}>
         <Image 
-          source={require('../../assets/images/elipse.png')}
+          source={require('../../assets/images/elipse-seleccion-3.png')}
         />
       </View>
       <View style={estiloAddTask.vista}>

@@ -37,7 +37,7 @@ export const Task = ({task, pres}) => {
         );
     }
 
-    const color = task.completed ? '#32cd32' : 'coral' 
+    const color = task.completed ? '#8ed1fc' : '#bfb240' 
 
   return (
     <View style={{flexDirection:'row'}}>

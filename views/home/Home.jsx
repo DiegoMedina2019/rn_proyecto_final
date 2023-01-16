@@ -63,12 +63,16 @@ const Home =  () => {
     <View>
       <View style={estiloHome.seccImg}>
         <Image 
-          source={require('../../assets/images/elipse.png')}
+          source={require('../../assets/images/elipse-seleccion-3.png')}
         />
       </View>
       <View style={estiloHome.vista}>
-        <View style={{height:"63%"}}>
+        <View style={{height:"66%"}}>
 
+          <Image 
+            source={require('../../assets/images/Logo-AFA.png')}
+            style={{width:150,height:150,alignSelf:'center'}}
+          />
           <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10}}>
            {"Tu lista de tareas"}
           </Text>
@@ -91,9 +95,9 @@ const Home =  () => {
 
         <View style={{}}>
           
-          <Button text={"Crear nueva tarea"} pres={addTask} />
-          <Button text={"Sacar una foto"}/>
-          <Button text={"Cerrar sesión"} pres={logout}/>
+          <Button height={50} text={"Crear nueva tarea"} pres={addTask} />
+          <Button height={50} text={"Cambiar imagen"}/>
+          <Button height={50} text={"Cerrar sesión"} pres={logout}/>
 
         </View>
       </View>

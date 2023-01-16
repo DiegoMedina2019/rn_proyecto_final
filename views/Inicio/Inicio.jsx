@@ -15,28 +15,28 @@ const Inicio = () => {
     <View >
       <View style={estiloInicio.seccImg}>
         <Image 
-          source={require('../../assets/images/elipse.png')}
+          source={require('../../assets/images/elipse-seleccion-3.png')}
         />
       </View>
       <View style={estiloInicio.vista}>
         <View>
 
           <Image 
-            source={require('../../assets/images/onboarding.png')} 
+            source={require('../../assets/images/img-inicio.png')} 
             style={{width: 200, height: 200,alignSelf:'center'}}
           />
           <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10,marginTop:25}}>
-            Get things done with TODO
+            ¡¡¡Somos campeones del mundo Carajo!!!
           </Text>
           <Text style={{alignSelf:'center',fontSize:15,marginBottom:20,textAlign:'center'}}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aliquam odio quis cum alias. Delectus illo repellendus fuga odit fugiat praesentium atque similique iure nisi reiciendis consequuntur, nemo esse vitae.
+            Muchachooos, ahora lo volvimos a ilusionar...
           </Text>
 
         </View>
 
         <View style={{marginTop:70}}>
           
-          <Button text={"Get Started"} pres={goRegister}/>
+          <Button text={"Comenzar"} pres={goRegister}/>
 
         </View>
       </View>
