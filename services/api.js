@@ -125,3 +125,23 @@ export const updateTask = async (data) => {
   });
   
 }
+
+export const deleteTask = async (data) => {
+
+  return await fetch(`${url}task/${data.task_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${data.token}`
+    }
+  }).then((response) => response.json())
+  .then((res) => {
+    console.log("DELETE TASK: ",res);
+    return res
+  }).catch(function(error) {
+    console.log('There has been a problem with your fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+  });
+  
+}

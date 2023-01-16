@@ -22,10 +22,9 @@ export default function App() {
       <View style={styles.container}>
         {/* <FlashMessage position="top" />  */}
         <NavigationContainer>
-          <Stack.Navigator initialRouteName='Login'>
-            {/* <Stack.Screen name="Inicio" component={Inicio} options={{headerShown:false}} />
+          <Stack.Navigator initialRouteName='Inicio'>
+            <Stack.Screen name="Inicio" component={Inicio} options={{headerShown:false}} />
             <Stack.Screen name="Register" component={Register} options={{headerShown:false}} />
-             */}
              <Stack.Screen name="Login" component={Login} options={{headerShown:false}} />
             <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
             <Stack.Screen name="AddTask" component={AddTask} options={{headerShown:false}} />

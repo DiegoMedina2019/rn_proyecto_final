@@ -1,17 +1,56 @@
-import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import React, { useContext, useEffect } from 'react'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { deleteTask } from '../services/api';
+import { AuthContext } from '../services/Context';
 
-export const Task = ({texto, pres}) => {
+
+export const Task = ({task, pres}) => {
+    const { user,setUser,backPressed, setBackPressed } = useContext(AuthContext);
+
+    useEffect(() => {
+        setBackPressed(false); // me aseguro de reinicializar el estado para q se pueda listar las tareas al regregar
+    }, [])
+
+    const eliminar = (id) => {
+        console.log("pres delete");
+        return Alert.alert(
+            "Estas seguro de eliminar la Tarea?",
+            "¡si eliminas esta tareas no habra vuelta atras!",
+            [
+              {
+                text: "SI",
+                onPress: () => {
+                    let d = {
+                        task_id:id,
+                        token:user.token
+                    }
+                    deleteTask(d).then(r=>{
+                        setBackPressed(true);
+                        Alert.alert("Tarea Eliminada con exito")
+                    })
+                },
+              },
+              {
+                text: "NO",
+              },
+            ]
+        );
+    }
+
+    const color = task.completed ? '#32cd32' : 'coral' 
+
   return (
-    <View style={{flexDirection:'row'}} >
+    <View style={{flexDirection:'row'}}>
+
         <Text 
-            style={estiloTask.task} 
+            style={[estiloTask.task,{backgroundColor:color}]} 
             onPress={pres} >
-                {texto}
+                {task.description}
         </Text>
-        <Image 
-            source={require('../assets/images/icon-basura.png')}
-            style={{width:35,height:35}} />
+        <TouchableOpacity onPress={() => eliminar(task._id)}>
+            <Image source={require('../assets/images/icon-basura.png')} style={{width:40,height:40}}  />
+        </TouchableOpacity>
+
     </View>
   )
 }
@@ -20,7 +59,6 @@ const estiloTask = new StyleSheet.create({
     task:{
       width:"90%",
       borderRadius:40,
-      backgroundColor:"coral",
       height:40,
       textAlignVertical:'center',
       paddingLeft:10,

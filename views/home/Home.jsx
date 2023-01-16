@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Button from '../../components/Button';
 import { Task } from '../../components/Task';
-import { getAllTask } from '../../services/api';
+import { deleteTask, getAllTask } from '../../services/api';
 import { AuthContext } from '../../services/Context';
 import LocalStorage from '../../services/localStorage';
 
@@ -25,9 +25,16 @@ const Home =  () => {
 
   useEffect(() => {
     //getTask(user.token)
-    getAllTask(user.token).then( r => {
-      setTasks( r )
-    })
+    if (!user.isLoggedIn) {
+      Alert.alert("¡Hey espera!...Primero debes loguearte!")
+      navigation.navigate("Login")
+    }else{
+
+      getAllTask(user.token).then( r => {
+        setTasks( r )
+      })
+
+    }
   }, [])
   
   const addTask = () => {
@@ -38,6 +45,18 @@ const Home =  () => {
     console.log("Task Seleccionada : ",JSON.stringify(info))
     setUser({...user,task:info})
     navigation.navigate("EditTask")
+  }
+
+  const logout = () => {
+    const auth = {
+      user: undefined,
+      isLoggedIn: false,
+      token: '',
+      task:{}
+    };
+    setUser(auth)
+    //navigation.navigate("Login")
+    navigation.navigate("Inicio")
   }
 
   return (
@@ -59,9 +78,9 @@ const Home =  () => {
               {
                  tasks?.data.map(ele => {
                   return <Task 
-                            key={ele._id} 
-                            pres={() => edit({id:ele._id,description:ele.description} )}
-                            texto={ele.description} />
+                          key={ele._id}
+                          pres={() => edit({id:ele._id,description:ele.description,completed:ele.completed} )}
+                          task={ele} />
                 })
               }
 
@@ -74,7 +93,7 @@ const Home =  () => {
           
           <Button text={"Crear nueva tarea"} pres={addTask} />
           <Button text={"Sacar una foto"}/>
-          <Button text={"Cerrar sesión"}/>
+          <Button text={"Cerrar sesión"} pres={logout}/>
 
         </View>
       </View>

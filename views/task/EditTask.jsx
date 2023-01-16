@@ -15,6 +15,7 @@ export const EditTask = () => {
 
     useEffect(() => {
       setTarea(user.task.description)
+      setIsEnabled(user.task.completed)
     }, [])
     
     useEffect(() => {
@@ -29,7 +30,7 @@ export const EditTask = () => {
         let d = {
             task_id:user.task.id,
             token:user.token,
-            task: {"description": tarea}
+            task: {"description": tarea,"completed": isEnabled}
         }
         updateTask(d).then(r=>{
             Alert.alert("Tarea editada con exito")
