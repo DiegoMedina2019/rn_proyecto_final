@@ -4,12 +4,12 @@ import { deleteTask } from '../services/api';
 import { AuthContext } from '../services/Context';
 
 
-export const Task = ({task, pres}) => {
-    const { user,setUser,backPressed, setBackPressed } = useContext(AuthContext);
+export const Task = ({task, pres,upList}) => {
+    const { user,setUser,backPressed } = useContext(AuthContext);
 
-    useEffect(() => {
+    /* useEffect(() => {
         setBackPressed(false); // me aseguro de reinicializar el estado para q se pueda listar las tareas al regregar
-    }, [])
+    }, []) */
 
     const eliminar = (id) => {
         console.log("pres delete");
@@ -25,7 +25,7 @@ export const Task = ({task, pres}) => {
                         token:user.token
                     }
                     deleteTask(d).then(r=>{
-                        setBackPressed(true);
+                        upList();
                         Alert.alert("Tarea Eliminada con exito")
                     })
                 },
@@ -61,7 +61,9 @@ const estiloTask = new StyleSheet.create({
       borderRadius:40,
       height:40,
       textAlignVertical:'center',
-      paddingLeft:10,
-      marginBottom:10
+      paddingLeft:15,
+      paddingRight:15,
+      marginBottom:10,
+      fontSize:15
     }
   });

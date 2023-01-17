@@ -1,15 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Button from '../../components/Button';
 import { Task } from '../../components/Task';
 import { deleteTask, getAllTask } from '../../services/api';
 import { AuthContext } from '../../services/Context';
 import LocalStorage from '../../services/localStorage';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const Home =  () => {
+
   const [auth,setAuth] = useState(null)
   const [tasks,setTasks] = useState(null)
+  const [image, setImage] = useState(null);
   const { user,setUser ,backPressed, setBackPressed} = useContext(AuthContext);
   const navigation = useNavigation()
   
@@ -22,6 +26,12 @@ const Home =  () => {
       setTasks( r )
     })
   }, [backPressed])
+
+  const upList = () => {
+    getAllTask(user.token).then( r => {
+      setTasks( r )
+    })
+  }
 
   useEffect(() => {
     //getTask(user.token)
@@ -58,6 +68,21 @@ const Home =  () => {
     //navigation.navigate("Login")
     navigation.navigate("Inicio")
   }
+  //let logo = '../../assets/images/Logo-AFA.png';
+  const takeImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
 
   return (
     <View>
@@ -67,12 +92,14 @@ const Home =  () => {
         />
       </View>
       <View style={estiloHome.vista}>
-        <View style={{height:"66%"}}>
-
-          <Image 
+        <View style={{height:"80%"}}>
+        
+        {
+          image? <Image source={{ uri: image }} style={{width:150,height:150,alignSelf:'center',borderRadius:80}} /> : <Image 
             source={require('../../assets/images/Logo-AFA.png')}
             style={{width:150,height:150,alignSelf:'center'}}
           />
+        }
           <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10}}>
            {"Tu lista de tareas"}
           </Text>
@@ -84,7 +111,8 @@ const Home =  () => {
                   return <Task 
                           key={ele._id}
                           pres={() => edit({id:ele._id,description:ele.description,completed:ele.completed} )}
-                          task={ele} />
+                          task={ele} 
+                          upList={upList}/>
                 })
               }
 
@@ -93,11 +121,39 @@ const Home =  () => {
 
         </View>
 
-        <View style={{}}>
+        <View style={estiloHome.seccBtn}>
           
-          <Button height={50} text={"Crear nueva tarea"} pres={addTask} />
-          <Button height={50} text={"Cambiar imagen"}/>
-          <Button height={50} text={"Cerrar sesión"} pres={logout}/>
+        <TouchableOpacity 
+            onPress={addTask} 
+            text={"Crear nueva tarea"} 
+            style={estiloHome.btn}>
+
+            <Image source={require('../../assets/images/add-tarea.png')} style={{width:40,height:40}}  />
+
+        </TouchableOpacity>
+        <TouchableOpacity 
+            onPress={logout} 
+            text={"Cambiar imagen"}
+            style={[estiloHome.btn]}
+            >
+
+            <Image source={require('../../assets/images/salida-3.png')} style={{width:50,height:50}}  />
+
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+            onPress={takeImage} 
+            text={"Cambiar imagen"}
+            style={estiloHome.btn}
+            >
+
+            <Image source={require('../../assets/images/Camara.png')} style={{width:40,height:40}}  />
+
+        </TouchableOpacity>
+          
+          {/* <Button height={50} width={160} text={"Crear nueva tarea"} pres={addTask} />
+          <Button height={50} width={160} text={"Cambiar imagen"} pres={takeImage} /> */}
+          {/* <Button height={50} text={"Cerrar sesión"} pres={logout}/> */}
 
         </View>
       </View>
@@ -108,7 +164,7 @@ const Home =  () => {
 
 const estiloHome = new StyleSheet.create({
   vista:{
-    width:"80%",
+    width:"90%",
     marginTop:-100,
     alignSelf:'center'
    // margin:30
@@ -125,7 +181,25 @@ const estiloHome = new StyleSheet.create({
     textAlignVertical:'center',
     paddingLeft:10,
     marginBottom:10
-  }
+  },
+  seccBtn:{
+    flexDirection:'row',
+    width:"100%",
+    height:"10%",
+    justifyContent:'space-between',
+    top:-60
+  },
+  btn: {
+    height: 60,
+    //margin: 5,
+    borderRadius:50,
+    padding: 10,
+    width:"100%",
+    backgroundColor:`#8ed1fc`,
+    alignItems:'center',
+    justifyContent:'center',
+    width:100
+  },
 });
 
 export default Home

@@ -64,8 +64,8 @@ export const EditTask = () => {
 
         <View>
 
-          <Button text={"Editar tarea"} pres={editar}/>
-          <Button text={"volver"} pres={volver}/>
+          <Button text={"Editar tarea"} pres={editar} margin={5}/>
+          <Button text={"volver"} pres={volver} margin={5} />
 
         </View>
       </View>
@@ -78,7 +78,7 @@ export const EditTask = () => {
 const estiloEditTask = new StyleSheet.create({
     vista:{
       width:"80%",
-      marginTop:-100,
+      top:100,
       alignSelf:'center'
      // margin:30
     },

@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Alert, Image, StyleSheet, Text, TextInput, Touchable, View } from 'react-native'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { userRegister } from '../../services/api';
+import { AuthContext } from '../../services/Context';
 //import { showFlashMessage } from '../../components/flashMessage';
 
 const Register = () => {
@@ -12,6 +13,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { login } = useContext(AuthContext);
 
   const inputs = [name,email,password,confirmPassword]
 
@@ -52,9 +54,17 @@ const Register = () => {
     
       try {
         const response = await userRegister(data);
-        //login({ ...response.data });
         console.log(response);
-         goLogin()
+        if ( typeof response == 'string' && response.split(' ')[0] == 'E11000') {
+          Alert.alert("¡Este usuario ya fue registrado!")
+          setName('')
+          setEmail('')
+          setPassword('')
+          setConfirmPassword('')
+        }else{
+          login({ ...response });
+          goLogin()
+        }
       } catch (e) {
         console.error('userRegister -> Error:', e)
       }
@@ -77,7 +87,7 @@ const Register = () => {
             ¡Bienvenido campeon del mundo!
           </Text>
           <Text style={{alignSelf:'center',fontSize:15,marginTop:10}}>
-            Te ayudamos a organizar tus tareas
+            Aqui te ayudamos a organizar tus tareas
           </Text>
         </View>
 
@@ -99,19 +109,21 @@ const Register = () => {
             name="pass"
             text={password}
             changeText={setPassword}
+            segura={true}
           />
           <Input  
             placeholder={"Confirma tu contraseña"}
             name="confirm_pass"
             text={confirmPassword}
             changeText={setConfirmPassword}
+            segura={true}
           />
         </View>
 
-        <View>
-          <Button text={"Registrarse"}  pres={validField}/>
+        <View style={{flexDirection:'column',alignItems:'center'}}>
+          <Button text={"Registrarse"}  pres={validField} width={320} mrL={20}/>
 
-          <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
+          <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:15}}>
             Ya tienes una cuenta ?
             <Text style={{color:'#bfb240',fontWeight:'bold',fontSize:15}} onPress={goLogin}>
               Logueate

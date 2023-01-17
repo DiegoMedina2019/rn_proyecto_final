@@ -25,7 +25,7 @@ const Inicio = () => {
             source={require('../../assets/images/img-inicio.png')} 
             style={{width: 200, height: 200,alignSelf:'center'}}
           />
-          <Text style={{fontWeight:'bold',alignSelf:'center',fontSize:25,marginBottom:10,marginTop:25}}>
+          <Text style={{fontWeight:'bold',alignSelf:'center',textAlign:'center', fontSize:25,marginBottom:10,marginTop:25}}>
             ¡¡¡Somos campeones del mundo Carajo!!!
           </Text>
           <Text style={{alignSelf:'center',fontSize:15,marginBottom:20,textAlign:'center'}}>
@@ -36,7 +36,7 @@ const Inicio = () => {
 
         <View style={{marginTop:70}}>
           
-          <Button text={"Comenzar"} pres={goRegister}/>
+          <Button text={"Comenzar"} pres={goRegister} margin={5}/>
 
         </View>
       </View>

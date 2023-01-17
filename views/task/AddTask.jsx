@@ -25,7 +25,7 @@ export const AddTask = () => {
     const crear = () => {
         let d = {
             token:user.token,
-            task: {"description": tarea}
+            task: {"description": tarea,"completed": isEnabled}
         }
         createTask(d).then(r=>{
             Alert.alert("Tarea creada con exito")
@@ -48,19 +48,19 @@ export const AddTask = () => {
             text={tarea}
             changeText={setTarea}
           />
-           {/* <Switch
+           <Switch
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={isEnabled}
-            /> */}
+            />
         </View>
 
         <View>
 
-          <Button text={"Crear tarea"} pres={crear}/>
-          <Button text={"volver"} pres={volver}/>
+          <Button text={"Crear tarea"} pres={crear} margin={5} />
+          <Button text={"volver"} pres={volver} margin={5} />
 
         </View>
       </View>
@@ -73,7 +73,7 @@ export const AddTask = () => {
 const estiloAddTask = new StyleSheet.create({
     vista:{
       width:"80%",
-      marginTop:-100,
+      top:100,
       alignSelf:'center'
      // margin:30
     },

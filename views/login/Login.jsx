@@ -42,10 +42,14 @@ const Login = () => {
     
       try {
         const response = await userLogin(data);
-
-        login({ ...response });
-        //LocalStorage.setItem('obj_login', response);
-        navigation.navigate('Home')
+        if ( typeof response == 'string' ) {
+          Alert.alert("¡Usuario no encontrado!")
+          setEmail('')
+          setPassword('')
+        }else{
+          login({ ...response });
+          navigation.navigate('Home')
+        }
       } catch (e) {
         console.error('userLogin -> Error:', e)
       }
@@ -84,6 +88,7 @@ const Login = () => {
             name="password"
             text={password}
             changeText={setPassword}
+            segura={true}
           />
         </View>
 
@@ -93,7 +98,7 @@ const Login = () => {
               Olvide mi contraseña
           </Text>
 
-          <Button text={"Iniciar sesión"} pres={valid}/>
+          <Button text={"Iniciar sesión"} pres={valid} margin={5}/>
 
           <Text style={{fontSize:15,justifyContent:'center',alignSelf:'center',marginTop:10}}>
             ¿No tienes una cuenta?

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput } from 'react-native';
 
-const Input = ({placeholder,name,text,changeText}) => {
+const Input = ({placeholder,name,text,changeText,segura}) => {
 
     //const [text, onChangeText] = useState('');
     
@@ -13,6 +13,7 @@ const Input = ({placeholder,name,text,changeText}) => {
           name={name}
           value={text}
           onChangeText={changeText}
+          secureTextEntry={segura}
       />
       {/* {errors?.name && <Text>{errors.name}</Text>} */}
     </>
@@ -26,7 +27,9 @@ const styleInput = new StyleSheet.create({
         borderRadius:50,
         paddingLeft: 30,
         backgroundColor:`#f8f8ff`,
-        width:"100%"
+        width:"100%",
+        borderColor:"#d2c179",
+        borderWidth:1
       },
 });
 
